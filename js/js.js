@@ -1,18 +1,26 @@
 $(function() {
-	$('*').keypress(function(event) {
-		if ( event.which == 113 ) {
-			window.location.reload()
+	$(document).keydown(function(event) {
+		if ( event.which == 81 ) {
+			showWord();
 		}
-
-		return false;
 	})
 
-	$('*').keypress(function(event) {
-		if ( event.which == 116 ) {
+	$(document).keydown(function(event) {
+		if ( event.which == 84 ) {
 			selectText();
 		}
 	})
 })
+
+function showWord() {
+	$('#word').load('index.php #word', function() {
+		if ( status == 'error') {
+			alert('ajax error');
+		} 
+	});
+
+	return false;
+}
 
 function selectText() {
 	var text = document.getElementById('content');
@@ -21,6 +29,8 @@ function selectText() {
 	range.selectNodeContents(text);
 	selection.removeAllRanges();
 	selection.addRange(range);
+
+	return false;
 }
 
 function reload() {
