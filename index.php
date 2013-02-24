@@ -5,6 +5,8 @@ session_start();
 header("Content-Type: text/html; charset=UTF-8");
 
 error_reporting(-1);
+
+define('STORENUMBER', $_SESSION['number']);
 /**
 * Search words in sub file
 *
@@ -30,13 +32,6 @@ function searchWords( $srt, $UpFirstLetter = false ) {
     return $result;
 }
 
-function view( array $srt ) {
-    echo "Всего слов: " . count($srt) . "<br><br>";
-    foreach ( $srt as $word ) {
-        echo "$word <br>";
-    }
-}
-
 function myShuffle( array $words ) {
     for ( $i = 0; $i < 10; $i ++ ) {
         shuffle($words);
@@ -56,6 +51,22 @@ function takeWords( $path ) {
     return $words;
 }
 
+function calculation($number, $session, $sign) {
+    if ( $sign === '+' ) {
+        $number++;
+    } elseif ( $sign === '-' ) {
+        $number--;
+    } elseif ( $sign === '=' ) {
+        $number = 0;
+    } else {
+        throw new Exception(' $sing must be "+" or "-" '); // not work, because AJAX
+    }
+
+    $_SESSION['number'] = $number; // store $number in $_SESSION
+
+    return $number;
+}
+
 /**
 *Main initialization
 *Need function?
@@ -63,7 +74,6 @@ function takeWords( $path ) {
 if ( !isset($_SESSION['number']) ) {
     $words = searchWords('The.Doctor.Blake.Mysteries.S01E03.HDTV.IVIEW.en.srt');
     saveWords($words);
-    //$words = myShuffle($words); // Button "shuffle words"
     $_SESSION['number'] = 0;
     $number = 0;
 } else {
@@ -71,9 +81,9 @@ if ( !isset($_SESSION['number']) ) {
     $words = takeWords('mywords.txt');
 }
 
+$countWords = count($words);
 
 if ( isset($_POST['shuffleArray']) ) {
-    echo "+";
     $words = myShuffle($words);
     saveWords($words);
     $words = takeWords('mywords.txt'); // Polymorphism :P
@@ -82,14 +92,15 @@ if ( isset($_POST['shuffleArray']) ) {
 }
 
 if ( isset($_GET['next']) && $_GET['next'] == 'next' ) {
-    $number++;
-    $_SESSION['number'] = $number;
+    $number = calculation($number, STORENUMBER, '+');
 }
 
 if ( isset($_GET['previous']) && $_GET['previous'] == 'previous' ) {
-    $number--;
-    $_SESSION['number'] = $number;
+    $number = calculation($number, STORENUMBER, '-');
 }
 
-echo $number;
+if ( $number < 0 ) {
+    $number = calculation($number, STORENUMBER, '=');
+}
+
 require_once 'page.php';

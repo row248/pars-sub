@@ -15,21 +15,33 @@
 			<input name="shuffleArray" type="submit" value="Начать с начала">
 		</form>
 
+		<div class="control">
+			<span class="showRules">Hide rules</span>
+			<ul class="rules">
+				<li>Q - next</li>
+				<li>A - previous</li>
+				<ul>T - highbright</ul>
+			</ul>
+		</div>
+
 	</div>
 
 	<div class="main">
 
+		<div class="info">
+			<span id="number"><?php echo $number; ?> из <?php echo $countWords; ?></span>
+			<img class="close-img" src="images/close.png">
+		</div>
+
 		<div class="content" id="content">
 			<span id="word" class="word"><?php echo htmlspecialchars($words[$number], ENT_QUOTES); ?></span>
+			<img class="add-img" src="images/add.jpg">
 		</div>
 
 		<div class="buttons">
-
-			<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-				<input name="previous" type="submit" value="previous" class="float-left" id="left-button">
-				<input name="next" type="submit" value="next" class="float-right" id="right-button" onclick="showWord()"> 
-			</form>
-
+			<hr>
+			<button class="button float-left" onclick="showWordPrevious()">Previous</button>
+			<button class="button float-right" onclick="showWordNext()">Next =></button>
 		</div>
 
 	</div>
