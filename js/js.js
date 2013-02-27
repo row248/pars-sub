@@ -4,8 +4,11 @@ $(function() {
 	var A_button = 65;
 	var T_button = 84;
 
-	var widthForImg = $('.close-img').css('width'); // store property
-	var heigthForImg = $('.close-img').css('heigth'); // store property
+	var widthForImgClose = $('.close-img').css('width'); // store property
+	var heigthForImgClose = $('.close-img').css('heigth'); // store property
+
+	var widthForImgAdd = $('.add-img').css('width');
+	var heigthForImgAdd = $('.add-img').css('width');
 
 	/**
 	* Keydown events
@@ -41,12 +44,37 @@ $(function() {
 		});
 	})
 
+	$('.add-img').mouseover(function() {
+		$(this).css({
+			width: '+=2px',
+			cursor: 'pointer'
+		})
+	})
+
 	$('.close-img').mouseout(function() {
 		$(this).css({
-			width: widthForImg,
-			heigth: heigthForImg,
+			width: widthForImgClose,
+			heigth: heigthForImgClose,
 			cursor: 'default'
 		});
+	})
+
+	$('.add-img').mouseout(function() {
+		$(this).css({
+			width: widthForImgAdd,
+			heigth: widthForImgAdd,
+			cursor: 'default'
+		})
+	})
+
+	$('.add-img').click(function() {
+		$.ajax({
+			type: 'POST',
+			url: 'index.php',
+			data: { word: $('#hidden-number').val() }
+		}).done(function() {
+			alert('Done?');
+		})
 	})
 
 	$('.close-img').click(function() {
@@ -76,7 +104,7 @@ function showWordPrevious() {
 }
 
 function selectText() {
-	var text = document.getElementById('content');
+	var text = document.getElementById('word');
 	var selection = window.getSelection();
 	var range = document.createRange();
 	range.selectNodeContents(text);

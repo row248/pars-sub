@@ -6,7 +6,12 @@ header("Content-Type: text/html; charset=UTF-8");
 
 error_reporting(-1);
 
-define('STORENUMBER', $_SESSION['number']);
+require_once 'db.php';
+
+if ( isset($_SESSION['number']) ) {
+    define('STORENUMBER', $_SESSION['number']);
+}
+
 /**
 * Search words in sub file
 *
@@ -66,6 +71,12 @@ function calculation($number, $session, $sign) {
 
     return $number;
 }
+
+//if ( isset($_POST['word']) ) {
+$pdo = Db::connect();
+var_dump($pdo);
+
+//}
 
 /**
 *Main initialization

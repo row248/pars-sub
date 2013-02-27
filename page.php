@@ -30,12 +30,14 @@
 
 		<div class="info">
 			<span id="number"><?php echo $number; ?> из <?php echo $countWords; ?></span>
+			<input id="hidden-number" type="hidden" value="<?php echo $number; ?>">
 			<img class="close-img" src="images/close.png">
 		</div>
 
+
 		<div class="content" id="content">
 			<span id="word" class="word"><?php echo htmlspecialchars($words[$number], ENT_QUOTES); ?></span>
-			<img class="add-img" src="images/add.jpg">
+			<img class="add-img" src="images/add.gif">
 		</div>
 
 		<div class="buttons">

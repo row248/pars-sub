@@ -95,7 +95,7 @@ hr {
 }
 
 .add-img {
-	margin-bottom: 25px;
+	margin-left: -39px; 
 	float: right;
 	width: 37px;
 }
@@ -125,5 +125,5 @@ hr {
 }
 
 .word {
-	//display: block;
+	
 }
